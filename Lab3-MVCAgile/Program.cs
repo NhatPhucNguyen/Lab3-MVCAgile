@@ -1,8 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Lab3_MVCAgile.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<Lab3_MVCAgileContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Lab3_MVCAgileContext") ?? throw new InvalidOperationException("Connection string 'Lab3_MVCAgileContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddDbContext<MvcMovieContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MvcMovieContext")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
